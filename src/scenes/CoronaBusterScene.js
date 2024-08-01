@@ -33,7 +33,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
 
 		this.handsanitizer = undefined
 
-		this.backsound = undefined
+		// this.backsound = undefined
 	}
 
 	preload() {
@@ -58,7 +58,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
 
 		this.load.image("handsanitizer", "images/handsanitizer.png")
 
-		this.load.audio("bgsound", "sfx/AloneAgainst Enemy.ogg")
+		// this.load.audio("bgsound", "sfx/AloneAgainst Enemy.ogg")
 		this.load.audio("laser", "sfx/sfx_laser.ogg")
 		this.load.audio("destroy", "sfx/destroy.mp3")
 		this.load.audio("life", "sfx/handsanitizer.mp3")
@@ -76,10 +76,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
 			repeat: 10,
 		})
 
-		Phaser.Actions.RandomRectangle(
-			this.clouds.getChildren(),
-			this.physics.world.bounds
-		)
+		Phaser.Actions.RandomRectangle(this.clouds.getChildren(), this.physics.world.bounds)
 
 		this.createButtons()
 
@@ -106,13 +103,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
 			runChildUpdate: true,
 		})
 
-		this.physics.add.overlap(
-			this.lasers,
-			this.enemies,
-			this.hitEnemy,
-			null,
-			this
-		)
+		this.physics.add.overlap(this.lasers, this.enemies, this.hitEnemy, null, this)
 
 		this.scoreLabel = this.add
 			.text(10, 10, "Score", {
@@ -130,13 +121,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
 			})
 			.setDepth(1)
 
-		this.physics.add.overlap(
-			this.player,
-			this.enemies,
-			this.decreaseLife,
-			null,
-			this
-		)
+		this.physics.add.overlap(this.player, this.enemies, this.decreaseLife, null, this)
 
 		this.handsanitizer = this.physics.add.group({
 			classType: FallingObject,
@@ -148,20 +133,14 @@ export default class CoronaBusterScene extends Phaser.Scene {
 			callbackScope: this,
 			loop: true,
 		})
-		this.physics.add.overlap(
-			this.player,
-			this.handsanitizer,
-			this.increaseLife,
-			null,
-			this
-		)
+		this.physics.add.overlap(this.player, this.handsanitizer, this.increaseLife, null, this)
 
-		this.backsound = this.sound.add("bgsound")
-		var soundConfig = {
-			loop: true,
-			volume: 0.5,
-		}
-		this.backsound.play(soundConfig)
+		// this.backsound = this.sound.add("bgsound")
+		// var soundConfig = {
+		// 	loop: true,
+		// 	volume: 0.5,
+		// }
+		// this.backsound.play(soundConfig)
 	}
 
 	update(time) {
@@ -182,18 +161,8 @@ export default class CoronaBusterScene extends Phaser.Scene {
 	createButtons() {
 		this.input.addPointer(3)
 
-		let shoot = this.add
-			.image(320, 550, "shoot")
-			.setInteractive()
-			.setDepth(0.5)
-			.setAlpha(0.8)
-			.setScale(0.8)
-		let nav_left = this.add
-			.image(50, 500, "left")
-			.setInteractive()
-			.setDepth(0.5)
-			.setAlpha(0.8)
-			.setScale(0.8)
+		let shoot = this.add.image(320, 550, "shoot").setInteractive().setDepth(0.5).setAlpha(0.8).setScale(0.8)
+		let nav_left = this.add.image(50, 500, "left").setInteractive().setDepth(0.5).setAlpha(0.8).setScale(0.8)
 		let nav_right = this.add
 			.image(nav_left.x + nav_left.displayWidth + 20, 500, "right")
 			.setInteractive()
