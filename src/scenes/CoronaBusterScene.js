@@ -34,6 +34,10 @@ export default class CoronaBusterScene extends Phaser.Scene {
 		this.handsanitizer = undefined
 
 		// this.backsound = undefined
+		this.keyW = undefined
+		this.keyA = undefined
+		this.keyS = undefined
+		this.keyD = undefined
 	}
 
 	preload() {
@@ -83,6 +87,10 @@ export default class CoronaBusterScene extends Phaser.Scene {
 		this.player = this.createPlayer()
 
 		this.cursor = this.input.keyboard.createCursorKeys()
+		this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
+		this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
+		this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+		this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
 
 		this.enemies = this.physics.add.group({
 			classType: FallingObject,
@@ -252,18 +260,18 @@ export default class CoronaBusterScene extends Phaser.Scene {
 	}
 
 	movePlayer(player, time) {
-		if (this.nav_left || this.cursor.left.isDown) {
+		if (this.nav_left || this.cursor.left.isDown || this.keyA.isDown) {
 			player.setVelocityX(this.speed * -1)
 			player.anims.play("left", true)
 			player.setFlipX(false)
-		} else if (this.nav_right || this.cursor.right.isDown) {
+		} else if (this.nav_right || this.cursor.right.isDown || this.keyD.isDown) {
 			player.setVelocityX(this.speed)
 			player.anims.play("right", true)
 			player.setFlipX(true)
-		} else if (this.cursor.up.isDown) {
+		} else if (this.cursor.up.isDown || this.keyW.isDown) {
 			player.setVelocityY(this.speed * -1)
 			player.anims.play("turn")
-		} else if (this.cursor.down.isDown) {
+		} else if (this.cursor.down.isDown || this.keyS.isDown) {
 			player.setVelocityY(this.speed)
 			player.anims.play("turn")
 		} else {
