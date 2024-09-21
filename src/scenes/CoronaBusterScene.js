@@ -13,6 +13,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
 		this.nav_left = false
 		this.nav_right = false
 		this.shoot = false
+		this.keyDown = false
 
 		this.player = undefined
 		this.speed = 100
@@ -260,25 +261,47 @@ export default class CoronaBusterScene extends Phaser.Scene {
 	}
 
 	movePlayer(player, time) {
-		if (this.nav_left || this.cursor.left.isDown || this.keyA.isDown) {
+		player.setVelocityX(0)
+		player.setVelocityY(0)
+		player.anims.play("turn")
+		if (this.cursor.up.isDown || this.keyW.isDown) {
+			player.setVelocityY(this.speed * -1)
+			player.anims.play("turn")
+		}
+		if (this.cursor.down.isDown || this.keyS.isDown) {
+			player.setVelocityY(this.speed)
+			player.anims.play("turn")
+		}
+		if (this.cursor.left.isDown || this.keyA.isDown) {
 			player.setVelocityX(this.speed * -1)
 			player.anims.play("left", true)
 			player.setFlipX(false)
-		} else if (this.nav_right || this.cursor.right.isDown || this.keyD.isDown) {
+		}
+		if (this.cursor.right.isDown || this.keyD.isDown) {
 			player.setVelocityX(this.speed)
 			player.anims.play("right", true)
 			player.setFlipX(true)
-		} else if (this.cursor.up.isDown || this.keyW.isDown) {
-			player.setVelocityY(this.speed * -1)
-			player.anims.play("turn")
-		} else if (this.cursor.down.isDown || this.keyS.isDown) {
-			player.setVelocityY(this.speed)
-			player.anims.play("turn")
-		} else {
-			player.setVelocityX(0)
-			player.setVelocityY(0)
-			player.anims.play("turn")
 		}
+
+		// if (this.nav_left || this.cursor.left.isDown || this.keyA.isDown) {
+		// 	player.setVelocityX(this.speed * -1)
+		// 	player.anims.play("left", true)
+		// 	player.setFlipX(false)
+		// } else if (this.nav_right || this.cursor.right.isDown || this.keyD.isDown) {
+		// 	player.setVelocityX(this.speed)
+		// 	player.anims.play("right", true)
+		// 	player.setFlipX(true)
+		// } else if (this.cursor.up.isDown || this.keyW.isDown) {
+		// 	player.setVelocityY(this.speed * -1)
+		// 	player.anims.play("turn")
+		// } else if (this.cursor.down.isDown || this.keyS.isDown) {
+		// 	player.setVelocityY(this.speed)
+		// 	player.anims.play("turn")
+		// } else {
+		// 	player.setVelocityX(0)
+		// 	player.setVelocityY(0)
+		// 	player.anims.play("turn")
+		// }
 
 		if ((this.shoot || this.cursor.space.isDown) && time > this.lastFired) {
 			const laser = this.lasers.get(0, 0, "laser")
