@@ -1,4 +1,4 @@
-import Phaser, { Physics } from "phaser"
+import Phaser from "phaser"
 import FallingObject from "../ui/FallingObject"
 import Laser from "../ui/Laser"
 
@@ -39,6 +39,9 @@ export default class CoronaBusterScene extends Phaser.Scene {
 		this.keyA = undefined
 		this.keyS = undefined
 		this.keyD = undefined
+
+		this.countdown = undefined
+		this.timer = 10
 	}
 
 	preload() {
@@ -150,6 +153,13 @@ export default class CoronaBusterScene extends Phaser.Scene {
 		// 	volume: 0.5,
 		// }
 		// this.backsound.play(soundConfig)
+
+		this.countdown = this.time.addEvent({
+			delay: 1000,
+			callback: this.resetSpeed,
+			callbackScope: this,
+			loop: true,
+		})
 	}
 
 	update(time) {
@@ -377,5 +387,12 @@ export default class CoronaBusterScene extends Phaser.Scene {
 		}
 
 		this.sound.play("life")
+	}
+
+	resetSpeed() {
+		this.timer--
+		// if (this.timer < 0) {
+		// 	this.scene.start("over-scene", { score: this.score })
+		// }
 	}
 }
